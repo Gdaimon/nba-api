@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Player }            from '../../models/player';
-import { ActivatedRoute }    from '@angular/router';
-import { PlayerService }     from '../../services/player.service';
+import { Component, OnInit }      from '@angular/core';
+import { Player }                 from '../../models/player';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PlayerService }          from '../../services/player.service';
+import { generate as index }      from 'shortid';
 
 @Component ( {
                selector    : 'app-player',
@@ -10,22 +11,59 @@ import { PlayerService }     from '../../services/player.service';
              } )
 export class PlayerComponent implements OnInit {
 
-  player : Player;
+  player : Player = {
+    team : {},
+  };
 
   constructor( private activateRoute : ActivatedRoute,
-               private playerService : PlayerService ) {
+               private playerService : PlayerService,
+               private router : Router ) {
   }
 
   ngOnInit() : void {
     this.activateRoute.params.subscribe ( params => {
       const { id } = params;
-      this.playerService.getPlayer ( id )
-          .subscribe ( ( response : any ) => {
-            this.player = response;
-            console.log ( this.player );
-          } );
+      if ( id !== 'nuevo' ) {
 
+        if ( +id ) {
+          this.playerService.getPlayer ( id )
+              .subscribe ( ( response : any ) => {
+                             console.log ( response );
+                             this.player = response;
+                           },
+              );
+        } else {
+          this.playerService.getPlayerLocal ( id );
+          this.playerService.players$.subscribe ( ( response : any ) => {
+            this.player = response[ 0 ];
+          } );
+        }
+
+      }
     } );
   }
 
+  eliminarJugador() {
+    this.playerService.eliminarJugador ( this.player.id );
+    this.router.navigate ( ['/players'] );
+  }
+
+  guardarJugador() {
+    if ( this.player.id ) {
+      return this.actualizarJugador ();
+    } else {
+      this.adicionarJugador ();
+    }
+  }
+
+  adicionarJugador() {
+    this.player.id = index ();
+    this.playerService.adicionarJugador ( this.player );
+    this.router.navigate ( ['/players'] );
+  }
+
+  actualizarJugador() {
+    this.playerService.updateJugador ( this.player );
+    this.router.navigate ( ['/players'] );
+  }
 }

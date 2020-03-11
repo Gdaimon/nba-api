@@ -1,25 +1,97 @@
-<h1 class="animated fadeIn">{{player?.first_name | uppercase}}
-  <small>({{player?.team.name}})</small>
-</h1>
-<hr>
-<div class="row animated fadeIn fast">
-  <div class="col-md-4">
-    <p class="h3">Nombre: <small>{{player?.first_name}} {{player?.last_name}}</small></p>
-    <p class="h3">Altura (pies): <small>{{player?.height_inches}}</small></p>
-    <p class="h3">Peso (Libras): <small>{{player?.weight_pounds}}</small></p>
-    <p class="h3 mb-4">Posicion: <small>{{player?.position}}</small></p>
+<div class="row animated fadeIn fast mt-3">
+  <div class="card mx-auto">
+    <div class="card-header">
+      <h1 class="animated fadeIn">{{player?.first_name | uppercase}}
+        <small>({{player?.team?.name}})</small>
+      </h1>
+    </div>
 
-    <a [routerLink]="['/players']" class="btn btn-outline-danger btn-block">
-      <i class="fa fa-arrow-circle-left"></i>
-      Regresar
-    </a>
-  </div>
-  <div class="col-md-8">
-    <p class="h4">Equipo: <small>{{player?.team.name}}</small></p>
-    <p class="h4">Division: <small>{{player?.team.division}}</small></p>
-    <p class="h4">Ciudad: <small>{{player?.team.city}}</small></p>
-    <p class="h4">Nombre Completo: <small>{{player?.team.full_name}}</small></p>
+    <div class="card-body">
 
+      <div class="form-group row">
+        <label class="col-sm-5 col-form-label" for="nombre">Nombre:</label>
+        <div class="col-sm-7">
+          <input [(ngModel)]="player.first_name" class="form-control" id="nombre" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-5 col-form-label" for="apellido">Apellido:</label>
+        <div class="col-sm-7">
+          <input [(ngModel)]="player.last_name" class="form-control" id="apellido" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-5 col-form-label" for="altura">Altura (pies):</label>
+        <div class="col-sm-7">
+          <input [(ngModel)]="player.height_inches" class="form-control" id="altura" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-5 col-form-label" for="peso">Peso (Libras):</label>
+        <div class="col-sm-7">
+          <input [(ngModel)]="player.weight_pounds" class="form-control" id="peso" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-5 col-form-label" for="posicion">Posicion:</label>
+        <div class="col-sm-7">
+          <input [(ngModel)]="player.position" class="form-control" id="posicion" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-5 col-form-label" for="equipo">Equipo:</label>
+        <div class="col-sm-7">
+          <input [(ngModel)]="player.team.name" class="form-control" id="equipo" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-5 col-form-label" for="division">Division:</label>
+        <div class="col-sm-7">
+          <input [(ngModel)]="player.team.division" class="form-control" id="division" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-5 col-form-label" for="ciudad">Ciudad:</label>
+        <div class="col-sm-7">
+          <input [(ngModel)]="player.team.city" class="form-control" id="ciudad" />
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-5 col-form-label" for="full_name">Nombre Completo Ciudad:</label>
+        <div class="col-sm-7">
+          <input [(ngModel)]="player.team.full_name" class="form-control" id="full_name" />
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-4">
+          <a [routerLink]="['/players']" class="btn btn-outline-warning">
+            <i class="fa fa-arrow-circle-left"></i>
+            Regresar
+          </a>
+        </div>
+        <div class="col-4">
+          <a (click)="guardarJugador()" class="btn btn-outline-success">
+            Guardar
+            <i class="fa fa-floppy-o"></i>
+          </a>
+        </div>
+        <div class="col-4">
+          <a (click)="eliminarJugador()" class="btn btn-outline-danger">
+            Eliminar
+            <i class="fa fa-trash"></i>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
-  <hr>
 </div>
+
