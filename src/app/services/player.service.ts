@@ -1,7 +1,8 @@
-import { Injectable }                  from '@angular/core';
-import { HttpClient }                  from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Player }                      from '../models/player';
+import { Injectable }      from '@angular/core';
+import { HttpClient }      from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { Player }          from '../models/player';
+import { map }             from 'rxjs/operators';
 
 @Injectable ( {
                 providedIn : 'root',
@@ -10,7 +11,7 @@ export class PlayerService {
   URL_API : string = 'https://www.balldontlie.io/api/v1/players';
   listaJugadores$ = new BehaviorSubject<Player[]> ( [] );
 
-  // players$ = this.listaJugadores$.asObservable ();
+  players$ = new BehaviorSubject<Player> ( {} );
 
   constructor( private httpClient : HttpClient ) {
     this.getAllPlayers ();
@@ -21,18 +22,72 @@ export class PlayerService {
                .subscribe ( ( response : any ) => this.listaJugadores$.next ( response.data ) );
   }
 
-  getPlayer( id : string ) : Observable<Player> {
+  getPlayer( id : string ) {
     return this.httpClient.get<Player> ( `${ this.URL_API }/${ id }` );
+  }
+
+  getPlayerLocal( id : string ) {
+    return this.listaJugadores$
+               .pipe (
+                 map ( ( players : any ) => players.filter ( ( jugador : any ) => jugador.id === id ) ),
+               )
+               .subscribe (
+                 playerFilter => {
+                   this.players$ = new BehaviorSubject<Player> ( {} );
+                   this.players$.next ( playerFilter );
+                 },
+               );
   }
 
   filterTerm( termino : string ) {
     const listaJugadoresFiltrados = new BehaviorSubject<Player[]> ( [] );
     this.listaJugadores$
         .subscribe ( jugadores => {
-          // listaJugadores = jugadores;
           listaJugadoresFiltrados.next ( this.buscarValores ( jugadores, termino ) );
         } );
     return listaJugadoresFiltrados;
+  }
+
+  eliminarJugador( id : number ) {
+    this.listaJugadores$
+        .pipe (
+          map ( ( players : any ) => players.filter ( ( jugador : any ) => jugador.id !== id ) ),
+        )
+        .subscribe (
+          playerFilter => {
+            this.listaJugadores$ = new BehaviorSubject<Player[]> ( [] );
+            this.listaJugadores$.next ( playerFilter );
+          },
+        );
+  }
+
+  adicionarJugador( jugador : any ) {
+    this.listaJugadores$.pipe (
+      map ( players => [... players, jugador] ),
+    ).subscribe (
+      players => {
+        this.listaJugadores$ = new BehaviorSubject<Player[]> ( [] );
+        this.listaJugadores$.next ( players );
+      },
+    );
+  }
+
+  updateJugador( jugador : any ) {
+    this.listaJugadores$
+        .subscribe (
+          ( players : any ) => {
+            for ( let indice = 0; indice <= players.length - 1; ++indice ) {
+              if ( players[ indice ].id === jugador.id ) {
+                players[ indice ] = jugador;
+                break;
+              }
+            }
+            this.players$ = new BehaviorSubject<Player> ( {} );
+            this.players$.next ( players );
+            this.listaJugadores$ = new BehaviorSubject<Player[]> ( [] );
+            this.listaJugadores$.next ( players );
+          },
+        );
   }
 
   private buscarValores( jugadores : Player[], termino : string ) {
