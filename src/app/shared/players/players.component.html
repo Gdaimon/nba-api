@@ -1,1 +1,32 @@
-<p>players works!</p>
+<div class="d-flex justify-content-center table-hover">
+  <table class="table">
+    <caption>Lista de jugadores</caption>
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellidos</th>
+      <th class="d-none d-md-block" scope="col">Posicion</th>
+      <th scope="col">Equipo</th>
+      <th class="d-none d-md-block" scope="col">Ciudad</th>
+      <th scope="col">Detalles</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let player of playersListFilter; let i =index;">
+      <td class="text-center">{{ i + 1 }}</td>
+      <td>{{ player.first_name }}</td>
+      <td>{{ player.last_name }}</td>
+      <td class="text-center d-none d-md-block">{{ player.position }}</td>
+      <td>{{ player.team.name }}</td>
+      <td class="d-none d-md-block">{{ player.team.city }}</td>
+      <td class="text-center">
+        <button
+          (click)="detailPlayer(player)"
+          class="btn btn-outline-success">...
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
