@@ -1,1 +1,25 @@
-<p>player works!</p>
+<h1 class="animated fadeIn">{{player?.first_name | uppercase}}
+  <small>({{player?.team.name}})</small>
+</h1>
+<hr>
+<div class="row animated fadeIn fast">
+  <div class="col-md-4">
+    <p class="h3">Nombre: <small>{{player?.first_name}} {{player?.last_name}}</small></p>
+    <p class="h3">Altura (pies): <small>{{player?.height_inches}}</small></p>
+    <p class="h3">Peso (Libras): <small>{{player?.weight_pounds}}</small></p>
+    <p class="h3 mb-4">Posicion: <small>{{player?.position}}</small></p>
+
+    <a [routerLink]="['/players']" class="btn btn-outline-danger btn-block">
+      <i class="fa fa-arrow-circle-left"></i>
+      Regresar
+    </a>
+  </div>
+  <div class="col-md-8">
+    <p class="h4">Equipo: <small>{{player?.team.name}}</small></p>
+    <p class="h4">Division: <small>{{player?.team.division}}</small></p>
+    <p class="h4">Ciudad: <small>{{player?.team.city}}</small></p>
+    <p class="h4">Nombre Completo: <small>{{player?.team.full_name}}</small></p>
+
+  </div>
+  <hr>
+</div>
