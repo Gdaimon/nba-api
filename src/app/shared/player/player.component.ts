@@ -66,4 +66,19 @@ export class PlayerComponent implements OnInit {
     this.playerService.updateJugador ( this.player );
     this.router.navigate ( ['/players'] );
   }
+
+  descargar() {
+    const filename = 'data.json';
+    const jsonStr = JSON.stringify ( this.player );
+
+    const element = document.createElement ( 'a' );
+    element.setAttribute ( 'href', 'data:text/plain;charset=utf-8,' + encodeURIComponent ( jsonStr ) );
+    element.setAttribute ( 'download', filename );
+
+    element.style.display = 'none';
+    document.body.appendChild ( element );
+    element.click ();
+
+    document.body.removeChild ( element );
+  }
 }
