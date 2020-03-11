@@ -1,6 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-warning">
-  <a class="navbar-brand" href="#">
+<nav class="navbar navbar-expand-lg navbar-light bg-warning d-md-flex justify-content-md-between flex-md-row  d-sm-flex flex-sm-column  d-sm-flex flex-sm-column justify-content-sm-start align-items-sm-start">
+  <a class="navbar-brand" routerLink="/players">
     <img alt="logo" class="d-inline-block align-top" height="30" src="assets/logo.png" width="30">
     API NBA
   </a>
+  <div class="form-inline">
+    <input
+      #buscar
+      (keyup.enter)="buscador(buscar.value, $event)"
+      aria-label="Search"
+      class="form-control mr-sm-2"
+      placeholder="Buscar" type="search">
+    <button
+      (click)="buscador(buscar.value,  $event)"
+      class="btn btn-outline-success my-2 my-sm-0"
+      type="button"
+    >Buscar
+    </button>
+  </div>
 </nav>
