@@ -7,6 +7,7 @@ import { HeaderComponent }  from './shared/header/header.component';
 import { PlayersComponent } from './shared/players/players.component';
 import { PlayerComponent }  from './shared/player/player.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BuscadorComponent } from './shared/buscador/buscador.component';
 
 @NgModule ( {
               declarations : [
@@ -14,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
                 HeaderComponent,
                 PlayersComponent,
                 PlayerComponent,
+                BuscadorComponent,
               ],
               imports      : [
                 BrowserModule,
