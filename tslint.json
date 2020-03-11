@@ -63,7 +63,7 @@
     "no-switch-case-fall-through": true,
     "no-var-requires": false,
     "typedef-whitespace": true,
-    "no-trailing-whitespace": true,
+    "no-trailing-whitespace": false,
     "object-literal-key-quotes": [
       true,
       "as-needed"
