@@ -20,10 +20,11 @@ export class PlayersComponent implements OnInit {
   }
 
   ngOnInit() : void {
-    this.playerService.getAllPlayers ()
-        .subscribe ( ( response : any ) => {
-          this.playersList = response.data;
-          this.playersListFilter = [... this.playersList];
+    this.playerService.listaJugadores$
+        .subscribe ( ( response ) => {
+          // console.log ( response );
+          // this.playersList = response;
+          this.playersListFilter = [... response];
         } );
   }
 
