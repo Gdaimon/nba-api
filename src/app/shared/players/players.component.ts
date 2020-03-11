@@ -10,7 +10,6 @@ import { Router }            from '@angular/router';
              } )
 export class PlayersComponent implements OnInit {
 
-  playersList : Array<Player> = [];
   playersListFilter : Array<Player> = [];
 
 
@@ -22,14 +21,15 @@ export class PlayersComponent implements OnInit {
   ngOnInit() : void {
     this.playerService.listaJugadores$
         .subscribe ( ( response ) => {
-          // console.log ( response );
-          // this.playersList = response;
           this.playersListFilter = [... response];
         } );
   }
 
   detailPlayer( player : Player ) {
-    console.dir ( player );
     this.router.navigate ( ['players/', player.id] );
+  }
+
+  crearJugador() {
+    this.router.navigate ( ['players/', 'nuevo'] );
   }
 }
